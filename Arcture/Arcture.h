@@ -7,65 +7,66 @@
 #include <functional>
 #include <string>
 
-#define DLL_EXPORT __declspec(dllexport)
-
-struct _ITable {
-
-public:
-
-	HINSTANCE	cur;
-	HINSTANCE	prev;
-	LPSTR		cmdline;
-	int			cmdshow;
-
-	/*
-	_ITable(HINSTANCE _cur, HINSTANCE _prev, LPSTR _cmdline, int _cmdshow) {
-		cur = _cur;
-		prev = _prev;
-		cmdline = _cmdline;
-		cmdshow = _cmdshow;
-	}
-	*/
-
-};
-
-typedef _ITable ITable;
-
-typedef struct {
-	int x;
-	int y;
-}Point;
-
-typedef struct {
-	float x;
-	float y;
-}PointF;
-
-typedef struct {
-	double x;
-	double y;
-}PointD;
-
-typedef struct {
-	int width;
-	int height;
-}Size;
-
-typedef struct {
-	float width;
-	float height;
-}SizeF;
-
-typedef struct {
-	double width;
-	double height;
-}SizeD;
+#define DLL_EXPORT		__declspec(dllexport)
+#define ARRAY_SIZE(_a)	(_a / _a[0])
 
 void(*_createFunc)(void);
 void(*_destroyFunc)(void);
 void(*_paintFunc)(HDC* hdcp, PAINTSTRUCT* psp);
 
 namespace arc {
+
+	struct _ITable {
+
+	public:
+
+		HINSTANCE	cur;
+		HINSTANCE	prev;
+		LPSTR		cmdline;
+		int			cmdshow;
+
+		/*
+		_ITable(HINSTANCE _cur, HINSTANCE _prev, LPSTR _cmdline, int _cmdshow) {
+			cur = _cur;
+			prev = _prev;
+			cmdline = _cmdline;
+			cmdshow = _cmdshow;
+		}
+		*/
+
+	};
+
+	typedef _ITable ITable;
+
+	typedef struct {
+		int x;
+		int y;
+	}Point;
+
+	typedef struct {
+		float x;
+		float y;
+	}PointF;
+
+	typedef struct {
+		double x;
+		double y;
+	}PointD;
+
+	typedef struct {
+		int width;
+		int height;
+	}Size;
+
+	typedef struct {
+		float width;
+		float height;
+	}SizeF;
+
+	typedef struct {
+		double width;
+		double height;
+	}SizeD;
 
 	class GUI {
 

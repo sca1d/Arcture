@@ -23,5 +23,8 @@
     <ClInclude Include="Arcture.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="Diversity.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

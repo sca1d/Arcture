@@ -4,9 +4,14 @@
 
 #include "Arcture.h"
 
+using namespace arc;
+
 void Paint(HDC* hdcp, PAINTSTRUCT* psp) {
 
+	TCHAR szText[] = TEXT("text sample.");
+
 	FillRect(*hdcp, &psp->rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+	TextOut(*hdcp, 0, 0, szText, lstrlen(szText));
 
 }
 
