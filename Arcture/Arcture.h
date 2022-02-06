@@ -61,6 +61,10 @@ typedef struct {
 	double height;
 }SizeD;
 
+void(*_createFunc)(void);
+void(*_destroyFunc)(void);
+void(*_paintFunc)(HDC* hdcp, PAINTSTRUCT* psp);
+
 namespace arc {
 
 	class GUI {
@@ -77,6 +81,8 @@ namespace arc {
 
 		HWND	Parent = NULL;
 		HMENU	Menu = NULL;
+
+		DWORD	style = WS_OVERLAPPEDWINDOW;
 
 		int x = CW_USEDEFAULT,
 			y = CW_USEDEFAULT,
@@ -117,7 +123,7 @@ namespace arc {
 			hWnd = CreateWindow(
 				classname,
 				WindowName,
-				WS_OVERLAPPEDWINDOW,
+				style,
 				x,
 				y,
 				_w,
@@ -139,16 +145,29 @@ namespace arc {
 
 		static LRESULT CALLBACK WndProc(HWND _hWnd, UINT _msg, WPARAM _wp, LPARAM _lp) {
 
+			HDC hdc;
+
 			switch (_msg) {
+
 			case WM_CREATE:
+				if (_createFunc != nullptr)	_createFunc();
 				break;
+
 			case WM_DESTROY:
+				if (_destroyFunc != nullptr) _destroyFunc();
 				PostQuitMessage(0);
 				break;
+
 			case WM_PAINT:
+				PAINTSTRUCT ps;
+				hdc = BeginPaint(_hWnd, &ps);
+				if (_paintFunc != nullptr) _paintFunc(&hdc, &ps);
+				EndPaint(_hWnd, &ps);
 				break;
+
 			default:
 				return (DefWindowProc(_hWnd, _msg, _wp, _lp));
+
 			}
 
 			return 0;
@@ -239,6 +258,17 @@ namespace arc {
 
 		}
 
+		void SetWindowStyle(DWORD _style) {
+
+			style = _style;
+
+		}
+
+		void AddWindowStyle(DWORD _style) {
+
+			style |= _style;
+		}
+
 		void SetParentWindow(HWND hWnd) {
 
 			Parent = hWnd;
@@ -248,6 +278,28 @@ namespace arc {
 		void SetMenu(HMENU hMenu) {
 
 			Menu = hMenu;
+
+		}
+
+		#pragma endregion
+
+		#pragma events
+
+		void CreateFunc(void(*_create)(void)) {
+
+			_createFunc = _create;
+
+		}
+
+		void DestroyFunc(void(*_destroy)(void)) {
+
+			_destroyFunc = _destroy;
+
+		}
+
+		void PaintFunc(void(*_paint)(HDC* hdcp, PAINTSTRUCT* psp)) {
+
+			_paintFunc = _paint;
 
 		}
 
