@@ -31,6 +31,36 @@ public:
 
 typedef _ITable ITable;
 
+typedef struct {
+	int x;
+	int y;
+}Point;
+
+typedef struct {
+	float x;
+	float y;
+}PointF;
+
+typedef struct {
+	double x;
+	double y;
+}PointD;
+
+typedef struct {
+	int width;
+	int height;
+}Size;
+
+typedef struct {
+	float width;
+	float height;
+}SizeF;
+
+typedef struct {
+	double width;
+	double height;
+}SizeD;
+
 namespace arc {
 
 	class GUI {
@@ -42,6 +72,16 @@ namespace arc {
 		HBRUSH bg = (HBRUSH)GetStockObject(BLACK_BRUSH);
 		LPCSTR menu_name = NULL;
 		LPCSTR classname = (LPCSTR)"winclass";
+
+		char WindowName[0xFF];
+
+		HWND	Parent = NULL;
+		HMENU	Menu = NULL;
+
+		int x = CW_USEDEFAULT,
+			y = CW_USEDEFAULT,
+			w = CW_USEDEFAULT,
+			h = CW_USEDEFAULT;
 
 		MSG msg;
 
@@ -63,6 +103,37 @@ namespace arc {
 			w.hIconSm = hicon;
 
 			return (RegisterClassEx(&w));
+
+		}
+
+		BOOL MakeWindow(void) {
+
+			int _w = w,
+				_h = h;
+
+			if (_w != CW_USEDEFAULT) _w += x;
+			if (_h != CW_USEDEFAULT) _h += y;
+
+			hWnd = CreateWindow(
+				classname,
+				WindowName,
+				WS_OVERLAPPEDWINDOW,
+				x,
+				y,
+				_w,
+				_h,
+				Parent,
+				Menu,
+				table.cur,
+				NULL
+			);
+
+			if (!hWnd) return FALSE;
+
+			ShowWindow(hWnd, table.cmdshow);
+			UpdateWindow(hWnd);
+
+			return TRUE;
 
 		}
 
@@ -114,32 +185,77 @@ namespace arc {
 
 		}
 
-		BOOL WindowInit(const char* WindowName, HWND Parent = NULL, HMENU Menu = NULL) {
+		#pragma region setups
 
-			hWnd = CreateWindow(
-				classname,
-				WindowName,
-				WS_OVERLAPPEDWINDOW,
-				CW_USEDEFAULT,
-				CW_USEDEFAULT,
-				CW_USEDEFAULT,
-				CW_USEDEFAULT,
-				Parent,
-				Menu,
-				table.cur,
-				NULL
-			);
+		template <typename S>
+		void SetWindowName(S name) {
 
-			if (!hWnd) return FALSE;
-
-			ShowWindow(hWnd, table.cmdshow);
-			UpdateWindow(hWnd);
-
-			return TRUE;
+			sprintf_s(WindowName, 0xFF, "%s", name);
 
 		}
 
+		void SetWindowPositionDefault(void) {
+
+			x = CW_USEDEFAULT;
+			y = CW_USEDEFAULT;
+
+		}
+
+		template <typename P>
+		void SetWindowPosition(P p) {
+
+			x = static_cast<int>(p.x);
+			y = static_cast<int>(p.y);
+
+		}
+		template <typename T>
+		void SetWindowPosition(T _x, T _y) {
+
+			x = static_cast<int>(_x);
+			y = static_cast<int>(_y);
+
+		}
+
+		void SetWindowSizeDefault(void) {
+
+			w = CW_USEDEFAULT;
+			h = CW_USEDEFAULT;
+
+		}
+
+		template <typename S>
+		void SetWindowSize(S s) {
+
+			w = static_cast<int>(s.width);
+			h = static_cast<int>(s.height);
+
+		}
+
+		template <typename T>
+		void SetWindowSize(T width, T height) {
+
+			w = static_cast<int>(width);
+			h = static_cast<int>(height);
+
+		}
+
+		void SetParentWindow(HWND hWnd) {
+
+			Parent = hWnd;
+
+		}
+
+		void SetMenu(HMENU hMenu) {
+
+			Menu = hMenu;
+
+		}
+
+		#pragma endregion
+
 		void WindowLoop(void) {
+
+			MakeWindow();
 
 			BOOL ret;
 

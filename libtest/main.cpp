@@ -7,7 +7,11 @@
 int WINAPI WinMain(HINSTANCE hCurInst, HINSTANCE hPrevInst, LPSTR lpsCmdLine, int nCmdShow) {
 
 	arc::GUI gui(hCurInst, hPrevInst, lpsCmdLine, nCmdShow);
-	gui.WindowInit("test");
+
+	gui.SetWindowName("Test Window");
+	gui.SetWindowPosition(30, 50);
+	gui.SetWindowSize(900, 400);
+
 	gui.WindowLoop();
 
 }
