@@ -16,8 +16,6 @@
 # Mono auto generated files
 mono_crash.*
 
-/libtest
-
 # Build results
 [Dd]ebug/
 [Dd]ebugPublic/
@@ -295,6 +293,8 @@ node_modules/
 
 # Visual Studio 6 auto-generated workspace file (contains which files were open etc.)
 *.vbw
+
+/libtest
 
 # Visual Studio LightSwitch build output
 **/*.HTMLClient/GeneratedArtifacts
