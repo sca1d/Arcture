@@ -28,4 +28,25 @@ namespace arc {
 
 	}
 
+	// @brief コンソールウィンドウを表示
+	int ViewConsole(void) {
+
+		AllocConsole();
+		FILE* fp = NULL;
+		freopen_s(&fp, "CONOUT$", "w", stdout);
+		freopen_s(&fp, "CONIN$", "r", stdin);
+
+		return 0;
+
+	}
+
+	// @brief コンソールウィンドウの終了
+	int CloseConsole(void) {
+
+		FreeConsole();
+
+		return 0;
+
+	}
+
 }

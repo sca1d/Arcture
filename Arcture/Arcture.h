@@ -7,13 +7,14 @@
 #include <functional>
 #include <string>
 
-#define DLL_EXPORT		__declspec(dllexport)
-#define ARRAY_SIZE(_a)	(_a / _a[0])
+#include "deflate.h"
 
 void(*_createFunc)(void);
 void(*_destroyFunc)(void);
 void(*_paintFunc)(HDC* hdcp, PAINTSTRUCT* psp);
-void(*_mouseDownFunc)(int x, int y);
+void(*_mouseDownFunc)(int x, int y, int input);
+void(*_mouseDBClickFunc)(int x, int y, int input);
+void(*_mouseUpFunc)(int x, int y, int input);
 
 namespace arc {
 
@@ -36,7 +37,6 @@ namespace arc {
 		*/
 
 	};
-
 	typedef _ITable ITable;
 
 	typedef struct {
@@ -168,10 +168,52 @@ namespace arc {
 				EndPaint(_hWnd, &ps);
 				break;
 
+			case WM_LBUTTONDBLCLK:
+				y = HIWORD(_lp);
+				x = LOWORD(_lp);
+				if (_mouseDBClickFunc != nullptr) _mouseDBClickFunc(x, y, ARC_LEFT_BUTTON);
+				break;
+			case WM_MBUTTONDBLCLK:
+				y = HIWORD(_lp);
+				x = LOWORD(_lp);
+				if (_mouseDBClickFunc != nullptr) _mouseDBClickFunc(x, y, ARC_MIDDLE_BUTTON);
+				break;
+			case WM_RBUTTONDBLCLK:
+				y = HIWORD(_lp);
+				x = LOWORD(_lp);
+				if (_mouseDBClickFunc != nullptr) _mouseDBClickFunc(x, y, ARC_RIGHT_BUTTON);
+				break;
+
+			case WM_LBUTTONUP:
+				y = HIWORD(_lp);
+				x = LOWORD(_lp);
+				if (_mouseUpFunc != nullptr) _mouseUpFunc(x, y, ARC_LEFT_BUTTON);
+				break;
+			case WM_MBUTTONUP:
+				y = HIWORD(_lp);
+				x = LOWORD(_lp);
+				if (_mouseUpFunc != nullptr) _mouseUpFunc(x, y, ARC_MIDDLE_BUTTON);
+				break;
+			case WM_RBUTTONUP:
+				y = HIWORD(_lp);
+				x = LOWORD(_lp);
+				if (_mouseUpFunc != nullptr) _mouseUpFunc(x, y, ARC_RIGHT_BUTTON);
+				break;
+
 			case WM_LBUTTONDOWN:
 				y = HIWORD(_lp);
 				x = LOWORD(_lp);
-				if (_mouseDownFunc != nullptr) _mouseDownFunc(x, y);
+				if (_mouseDownFunc != nullptr) _mouseDownFunc(x, y, ARC_LEFT_BUTTON);
+				break;
+			case WM_MBUTTONDOWN:
+				y = HIWORD(_lp);
+				x = LOWORD(_lp);
+				if (_mouseDownFunc != nullptr) _mouseDownFunc(x, y, ARC_MIDDLE_BUTTON);
+				break;
+			case WM_RBUTTONDOWN:
+				y = HIWORD(_lp);
+				x = LOWORD(_lp);
+				if (_mouseDownFunc != nullptr) _mouseDownFunc(x, y, ARC_RIGHT_BUTTON);
 				//InvalidateRect(_hWnd, NULL, TRUE);
 				break;
 
@@ -313,9 +355,21 @@ namespace arc {
 
 		}
 
-		void MouseDownFunc(void(*_mouseDown)(int x, int y)) {
+		void MouseDownFunc(void(*_mouseDown)(int x, int y, int input)) {
 
 			_mouseDownFunc = _mouseDown;
+
+		}
+
+		void MouseDBClickFunc(void(*_mouseDBClick)(int x, int y, int input)) {
+
+			_mouseDBClickFunc = _mouseDBClick;
+
+		}
+
+		void MouseUpFunc(void(*_mouseUp)(int x, int y, int input)) {
+
+			_mouseUpFunc = _mouseUp;
 
 		}
 

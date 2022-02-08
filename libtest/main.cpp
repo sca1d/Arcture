@@ -2,7 +2,10 @@
 #include <stdlib.h>
 #include <windows.h>
 
+#include <iostream>
+
 #include "Arcture.h"
+#include "Diversity.h"
 
 //using namespace arc;
 
@@ -15,13 +18,42 @@ void Paint(HDC* hdcp, PAINTSTRUCT* psp) {
 
 }
 
-void MouseDown(int x, int y) {
+void MouseDown(int x, int y, int input) {
 
-	printf("x:%d y:%d\n", x, y);
+	switch (input) {
+	case ARC_LEFT_BUTTON:
+		printf("[mouse down] x:%d y:%d input:left\n", x, y);
+		break;
+	case ARC_MIDDLE_BUTTON:
+		printf("[mouse down] x:%d y:%d input:middle\n", x, y);
+		break;
+	case ARC_RIGHT_BUTTON:
+		printf("[mouse down] x:%d y:%d input:right\n", x, y);
+		break;
+	}
+	//std::cout << "x:" << x << " y:" << y << "\n";
+
+}
+
+void MouseDBClick(int x, int y, int input) {
+
+	switch (input) {
+	case ARC_LEFT_BUTTON:
+		printf("[mouse dbclick] x:%d y:%d input:left\n", x, y);
+		break;
+	case ARC_MIDDLE_BUTTON:
+		printf("[mouse dbclick] x:%d y:%d input:middle\n", x, y);
+		break;
+	case ARC_RIGHT_BUTTON:
+		printf("[mouse dbclick] x:%d y:%d input:right\n", x, y);
+		break;
+	}
 
 }
 
 int WINAPI WinMain(HINSTANCE hCurInst, HINSTANCE hPrevInst, LPSTR lpsCmdLine, int nCmdShow) {
+
+	arc::ViewConsole();
 
 	arc::GUI gui(hCurInst, hPrevInst, lpsCmdLine, nCmdShow);
 
@@ -32,6 +64,7 @@ int WINAPI WinMain(HINSTANCE hCurInst, HINSTANCE hPrevInst, LPSTR lpsCmdLine, in
 
 	gui.PaintFunc(Paint);
 	gui.MouseDownFunc(MouseDown);
+	gui.MouseDBClickFunc(MouseDBClick);
 
 	gui.WindowLoop();
 

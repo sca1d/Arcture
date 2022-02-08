@@ -26,5 +26,8 @@
     <ClInclude Include="Diversity.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="deflate.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
