@@ -13,6 +13,7 @@
 void(*_createFunc)(void);
 void(*_destroyFunc)(void);
 void(*_paintFunc)(HDC* hdcp, PAINTSTRUCT* psp);
+void(*_mouseDownFunc)(int x, int y);
 
 namespace arc {
 
@@ -147,6 +148,7 @@ namespace arc {
 		static LRESULT CALLBACK WndProc(HWND _hWnd, UINT _msg, WPARAM _wp, LPARAM _lp) {
 
 			HDC hdc;
+			static int x, y;
 
 			switch (_msg) {
 
@@ -164,6 +166,13 @@ namespace arc {
 				hdc = BeginPaint(_hWnd, &ps);
 				if (_paintFunc != nullptr) _paintFunc(&hdc, &ps);
 				EndPaint(_hWnd, &ps);
+				break;
+
+			case WM_LBUTTONDOWN:
+				y = HIWORD(_lp);
+				x = LOWORD(_lp);
+				if (_mouseDownFunc != nullptr) _mouseDownFunc(x, y);
+				//InvalidateRect(_hWnd, NULL, TRUE);
 				break;
 
 			default:
@@ -284,7 +293,7 @@ namespace arc {
 
 		#pragma endregion
 
-		#pragma events
+		#pragma region events
 
 		void CreateFunc(void(*_create)(void)) {
 
@@ -304,7 +313,47 @@ namespace arc {
 
 		}
 
+		void MouseDownFunc(void(*_mouseDown)(int x, int y)) {
+
+			_mouseDownFunc = _mouseDown;
+
+		}
+
 		#pragma endregion
+
+		#pragma region getter
+
+		HWND GetHandle(void) {
+
+			return hWnd;
+
+		}
+
+		HWND GetParentHandle(void) {
+
+			return Parent;
+
+		}
+
+		HICON GetIcon(void) {
+
+			return icon;
+
+		}
+
+		HICON GetIconSM(void) {
+
+			return hicon;
+
+		}
+
+		#pragma endregion
+
+		void Redraw(void) {
+
+			InvalidateRect(hWnd, NULL, TRUE);
+
+		}
 
 		void WindowLoop(void) {
 
