@@ -20,10 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Arcture.h">
+    <ClInclude Include="arcture.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="Diversity.h">
+    <ClInclude Include="diversity.h">
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="deflate.h">

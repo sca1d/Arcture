@@ -168,6 +168,7 @@ namespace arc {
 				EndPaint(_hWnd, &ps);
 				break;
 
+			#pragma region buttons
 			case WM_LBUTTONDBLCLK:
 				y = HIWORD(_lp);
 				x = LOWORD(_lp);
@@ -216,6 +217,7 @@ namespace arc {
 				if (_mouseDownFunc != nullptr) _mouseDownFunc(x, y, ARC_RIGHT_BUTTON);
 				//InvalidateRect(_hWnd, NULL, TRUE);
 				break;
+			#pragma endregion
 
 			default:
 				return (DefWindowProc(_hWnd, _msg, _wp, _lp));
