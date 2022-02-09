@@ -9,6 +9,8 @@
 
 #include "deflate.h"
 
+extern "C" NTSTATUS WPCloop();
+
 void(*_createFunc)(void);
 void(*_destroyFunc)(void);
 void(*_paintFunc)(HDC* hdcp, PAINTSTRUCT* psp);
@@ -22,7 +24,7 @@ namespace arc {
 
 	public:
 
-		HINSTANCE	cur;
+		HINSTANCE	hInst;
 		HINSTANCE	prev;
 		LPSTR		cmdline;
 		int			cmdshow;
@@ -69,11 +71,12 @@ namespace arc {
 		double height;
 	}SizeD;
 
+	ITable table;
+
 	class GUI {
 
 	private:
 		HWND hWnd;
-		ITable table;
 		HICON icon = NULL, hicon = NULL;
 		HBRUSH bg = (HBRUSH)GetStockObject(BLACK_BRUSH);
 		LPCSTR menu_name = NULL;
@@ -102,7 +105,7 @@ namespace arc {
 			w.lpfnWndProc = wproc;
 			w.cbClsExtra = 0;
 			w.cbWndExtra = 0;
-			w.hInstance = table.cur;
+			w.hInstance = table.hInst;
 			w.hIcon = icon;
 			w.hCursor = (HCURSOR)LoadImage(NULL, MAKEINTRESOURCE(IDC_ARROW), IMAGE_CURSOR, 0, 0, LR_DEFAULTSIZE | LR_SHARED);
 			w.hbrBackground = bg;
@@ -132,7 +135,7 @@ namespace arc {
 				_h,
 				Parent,
 				Menu,
-				table.cur,
+				table.hInst,
 				NULL
 			);
 
@@ -153,7 +156,24 @@ namespace arc {
 			switch (_msg) {
 
 			case WM_CREATE:
+				CreateWindowEx(
+					0,
+					"BUTTON",
+					"push!!",
+					WS_CHILD | WS_VISIBLE | BS_FLAT,
+					10,
+					100,
+					50,
+					30,
+					_hWnd,
+					(HMENU)100,
+					table.hInst,
+					NULL
+				);
 				if (_createFunc != nullptr)	_createFunc();
+				break;
+
+			case WM_COMMAND:
 				break;
 
 			case WM_DESTROY:

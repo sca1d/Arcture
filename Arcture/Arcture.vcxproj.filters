@@ -30,4 +30,9 @@
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <MASM Include="arcture.asm">
+      <Filter>Source</Filter>
+    </MASM>
+  </ItemGroup>
 </Project>
