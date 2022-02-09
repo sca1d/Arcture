@@ -152,7 +152,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arcture.h" />
+    <ClInclude Include="builder.h" />
     <ClInclude Include="deflate.h" />
+    <ClInclude Include="defstrct.h" />
     <ClInclude Include="diversity.h" />
   </ItemGroup>
   <ItemGroup>

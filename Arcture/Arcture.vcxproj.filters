@@ -29,6 +29,12 @@
     <ClInclude Include="deflate.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="builder.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="defstrct.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="arcture.asm">

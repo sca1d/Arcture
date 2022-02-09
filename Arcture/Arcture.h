@@ -1,17 +1,12 @@
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <windows.h>
-
-#include <functional>
-#include <string>
-
 #include "deflate.h"
+#include "defstrct.h"
+#include "builder.h"
 
 extern "C" NTSTATUS WPCloop();
 
-void(*_createFunc)(void);
+void(*_createFunc)(arc::Builder builder);
 void(*_destroyFunc)(void);
 void(*_paintFunc)(HDC* hdcp, PAINTSTRUCT* psp);
 void(*_mouseDownFunc)(int x, int y, int input);
@@ -20,58 +15,10 @@ void(*_mouseUpFunc)(int x, int y, int input);
 
 namespace arc {
 
-	struct _ITable {
-
-	public:
-
-		HINSTANCE	hInst;
-		HINSTANCE	prev;
-		LPSTR		cmdline;
-		int			cmdshow;
-
-		/*
-		_ITable(HINSTANCE _cur, HINSTANCE _prev, LPSTR _cmdline, int _cmdshow) {
-			cur = _cur;
-			prev = _prev;
-			cmdline = _cmdline;
-			cmdshow = _cmdshow;
-		}
-		*/
-
-	};
-	typedef _ITable ITable;
-
-	typedef struct {
-		int x;
-		int y;
-	}Point;
-
-	typedef struct {
-		float x;
-		float y;
-	}PointF;
-
-	typedef struct {
-		double x;
-		double y;
-	}PointD;
-
-	typedef struct {
-		int width;
-		int height;
-	}Size;
-
-	typedef struct {
-		float width;
-		float height;
-	}SizeF;
-
-	typedef struct {
-		double width;
-		double height;
-	}SizeD;
-
 	ITable table;
+
+	int Controls[0xFF];
+	int ControlNum = 0;
 
 	class GUI {
 
@@ -152,28 +99,16 @@ namespace arc {
 
 			HDC hdc;
 			static int x, y;
+			Builder builder(&_hWnd, &table);
 
 			switch (_msg) {
 
 			case WM_CREATE:
-				CreateWindowEx(
-					0,
-					"BUTTON",
-					"push!!",
-					WS_CHILD | WS_VISIBLE | BS_FLAT,
-					10,
-					100,
-					50,
-					30,
-					_hWnd,
-					(HMENU)100,
-					table.hInst,
-					NULL
-				);
-				if (_createFunc != nullptr)	_createFunc();
+				if (_createFunc != nullptr)	_createFunc(builder);
 				break;
 
 			case WM_COMMAND:
+
 				break;
 
 			case WM_DESTROY:
@@ -359,7 +294,7 @@ namespace arc {
 
 		#pragma region events
 
-		void CreateFunc(void(*_create)(void)) {
+		void CreateFunc(void(*_create)(Builder builder)) {
 
 			_createFunc = _create;
 

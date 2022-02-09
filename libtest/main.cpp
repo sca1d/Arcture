@@ -7,7 +7,15 @@
 #include "Arcture.h"
 #include "Diversity.h"
 
+#define ID_BUTTON 100
+
 //using namespace arc;
+
+void Create(arc::Builder builder) {
+
+	builder.AddButton("button!!", arc::Point(10, 20), arc::Size(50, 15), ID_BUTTON);
+
+}
 
 void Paint(HDC* hdcp, PAINTSTRUCT* psp) {
 
