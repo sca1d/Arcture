@@ -11,9 +11,9 @@
 
 //using namespace arc;
 
-void Create(arc::Builder builder) {
+void Create(arc::Builder* builder) {
 
-	builder.AddButton("button!!", arc::Point(10, 20), arc::Size(50, 15), ID_BUTTON);
+	builder->AddButton("button!!", arc::Point(10, 20), arc::Size(50, 15), ID_BUTTON);
 
 }
 
@@ -70,6 +70,7 @@ int WINAPI WinMain(HINSTANCE hCurInst, HINSTANCE hPrevInst, LPSTR lpsCmdLine, in
 	gui.SetWindowSize(900, 400);
 	gui.AddWindowStyle(WS_HSCROLL);
 
+	gui.CreateFunc(Create);
 	gui.PaintFunc(Paint);
 	gui.MouseDownFunc(MouseDown);
 	gui.MouseDBClickFunc(MouseDBClick);

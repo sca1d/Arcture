@@ -6,7 +6,7 @@
 
 extern "C" NTSTATUS WPCloop();
 
-void(*_createFunc)(arc::Builder builder);
+void(*_createFunc)(arc::Builder* builder);
 void(*_destroyFunc)(void);
 void(*_paintFunc)(HDC* hdcp, PAINTSTRUCT* psp);
 void(*_mouseDownFunc)(int x, int y, int input);
@@ -104,7 +104,7 @@ namespace arc {
 			switch (_msg) {
 
 			case WM_CREATE:
-				if (_createFunc != nullptr)	_createFunc(builder);
+				if (_createFunc != nullptr)	_createFunc(&builder);
 				break;
 
 			case WM_COMMAND:
@@ -294,7 +294,7 @@ namespace arc {
 
 		#pragma region events
 
-		void CreateFunc(void(*_create)(Builder builder)) {
+		void CreateFunc(void(*_create)(Builder* builder)) {
 
 			_createFunc = _create;
 
