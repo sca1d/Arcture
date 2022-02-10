@@ -9,7 +9,7 @@
 
 #define DLL_EXPORT		__declspec(dllexport)
 
-#define ARRAY_SIZE(_a)	(_a / _a[0])
+#define ARRAY_SIZE(_a)	(sizeof(_a) / sizeof(_a[0]))
 
 #define ARC_ID2HANDLE		GetDlgItem
 #define ARC_HANDLE2ID		GetDlgCtrlID
