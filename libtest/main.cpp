@@ -13,14 +13,15 @@
 #define ID_IMAGE	103
 
 //using namespace arc;
-arc::ARC_ButtonControl RadioButton, Checkbox;
+arc::ARC_RadioButtonControl RadioButton;
+arc::ARC_CheckboxControl Checkbox;
 
 void Button_Click(void) {
 
 	HFONT font = CreateFont(20, 0, 0, 0, 0, FALSE, FALSE, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		VARIABLE_PITCH | FF_DONTCARE, "HGçsèëëÃ");
 
-	RadioButton.Enable(!RadioButton.Enable());
+	RadioButton.Checked(!RadioButton.Checked());
 	
 	Checkbox.Font(font);
 	RadioButton.Font(Checkbox.Font());

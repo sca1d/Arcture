@@ -48,7 +48,7 @@ namespace arc {
 
 			for (int i = 0; i < ControlNum; i++) {
 
-				if (Controls.c[i].id == id) {
+				if (Controls.c[i].ID() == id) {
 					return &Controls.c[i];
 				}
 

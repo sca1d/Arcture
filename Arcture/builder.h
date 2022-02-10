@@ -136,7 +136,7 @@ namespace arc {
 		ARC_ButtonControl AddImageButton(S text, HBITMAP image, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_BITMAP) {
 
 			ARC_ButtonControl info = AddButton(text, position, size, id, _click, style);
-			SendMessage(info.hwnd, BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)image);
+			SendMessage(info.hWnd(), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)image);
 			return info;
 
 		}

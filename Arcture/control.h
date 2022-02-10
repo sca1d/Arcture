@@ -2,17 +2,17 @@
 
 #include "defstrct.h"
 
-#define _IMP_CHECKED(__hwnd)									\
-	BOOL Checked(BOOL value = ARC_NULL) {						\
-																\
-		if (value != ARC_NULL) {								\
-			SendMessage(hwnd, BM_SETCHECK, value, 0);			\
-			return value;										\
-		}														\
-		else {													\
-			return SendMessage(hwnd, BM_GETCHECK, NULL, NULL);	\
-		}														\
-																\
+#define _IMP_CHECKED(__hwnd)										\
+	BOOL Checked(BOOL value = ARC_NULL) {							\
+																	\
+		if (value != ARC_NULL) {									\
+			SendMessage(__hwnd, BM_SETCHECK, value, 0);				\
+			return value;											\
+		}															\
+		else {														\
+			return SendMessage(__hwnd, BM_GETCHECK, NULL, NULL);	\
+		}															\
+																	\
 	}
 
 namespace arc {
@@ -21,12 +21,12 @@ namespace arc {
 
 	private:
 
+		int		_id;
+		HWND	_hwnd, _parent;
 		ARC_RGB	bcolor;
 
 	public:
 
-		int		id;
-		HWND	hwnd, parent;
 		void(*Click)(void);
 
 		ARC_Control(void) {
@@ -34,22 +34,40 @@ namespace arc {
 
 
 		}
-		ARC_Control(int _id, HWND _hwnd, HWND _parent, void(*_click)(void) = nullptr) {
+		ARC_Control(int id_, HWND hwnd_, HWND parent_, void(*_click)(void) = nullptr) {
 
-			this->id = _id;
-			this->hwnd = _hwnd;
-			this->parent = _parent;
+			this->_id = id_;
+			this->_hwnd = hwnd_;
+			this->_parent = parent_;
 			this->Click = _click;
+
+		}
+
+		int ID(void) {
+
+			return _id;
+
+		}
+
+		HWND hWnd(void) {
+
+			return _hwnd;
+
+		}
+
+		HWND Parent(void) {
+
+			return _parent;
 
 		}
 
 		BOOL Enable(BOOL value = ARC_NULL) {
 
 			if (value != ARC_NULL) {
-				return ARC_SET_ENABLE(hwnd, value);
+				return ARC_SET_ENABLE(_hwnd, value);
 			}
 			else {
-				return ARC_GET_ENABLE(hwnd);
+				return ARC_GET_ENABLE(_hwnd);
 			}
 
 		}
@@ -57,11 +75,11 @@ namespace arc {
 		HFONT Font(HFONT value = nullptr) {
 
 			if (value != nullptr) {
-				SendMessage(hwnd, WM_SETFONT, (LPARAM)value, true);
+				SendMessage(_hwnd, WM_SETFONT, (LPARAM)value, true);
 				return value;
 			}
 			else {
-				return reinterpret_cast<HFONT>(SendMessage(hwnd, WM_GETFONT, 0, 0));
+				return reinterpret_cast<HFONT>(SendMessage(_hwnd, WM_GETFONT, 0, 0));
 			}
 
 		}
@@ -70,7 +88,7 @@ namespace arc {
 
 			if (value.IsNull()) {
 				bcolor = value;
-				InvalidateRect(hwnd, NULL, TRUE);
+				InvalidateRect(_hwnd, NULL, TRUE);
 				return value;
 			}
 			else {
@@ -97,7 +115,7 @@ namespace arc {
 
 			if (value.IsNull()) {
 				tcolor = value;
-				InvalidateRect(hwnd, NULL, TRUE);
+				InvalidateRect(hWnd(), NULL, TRUE);
 				return value;
 			}
 			else {
@@ -114,7 +132,7 @@ namespace arc {
 
 		using ARC_ButtonControl::ARC_ButtonControl;
 
-		_IMP_CHECKED(hwnd)
+		_IMP_CHECKED(hWnd())
 
 	};
 
@@ -124,7 +142,7 @@ namespace arc {
 
 		using ARC_ButtonControl::ARC_ButtonControl;
 
-		_IMP_CHECKED(hwnd);
+		_IMP_CHECKED(hWnd());
 
 	};
 
