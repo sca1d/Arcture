@@ -27,6 +27,39 @@ namespace arc {
 
 	}ITable;
 
+	typedef struct _ARC_RGB {
+
+		unsigned int r;
+		unsigned int g;
+		unsigned int b;
+
+		_ARC_RGB(int null = ARC_NULL) {
+
+			this->r = ARC_NULL;
+			this->g = ARC_NULL;
+			this->b = ARC_NULL;
+
+		}
+		_ARC_RGB(int _r, int _g, int _b) {
+
+			this->r = _r;
+			this->g = _g;
+			this->b = _b;
+
+		}
+		bool IsNull(void) {
+
+			if (this->r == ARC_NULL && this->g == ARC_NULL && this->b == ARC_NULL) {
+				return FALSE;
+			}
+			else {
+				return TRUE;
+			}
+
+		}
+
+	}ARC_RGB;
+
 	typedef struct _Point {
 
 		int x;

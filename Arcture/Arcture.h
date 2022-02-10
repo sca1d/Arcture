@@ -2,6 +2,7 @@
 
 #include "deflate.h"
 #include "defstrct.h"
+#include "control.h"
 #include "builder.h"
 
 extern "C" NTSTATUS WPCloop();
@@ -17,7 +18,7 @@ namespace arc {
 
 	ITable table;
 
-	int Controls[0xFF];
+	ControlInfoArray Controls;
 	int ControlNum = 0;
 
 	class GUI {
@@ -42,6 +43,20 @@ namespace arc {
 			h = CW_USEDEFAULT;
 
 		MSG msg;
+		
+		static ARC_Control* CtrlInId(int id) {
+
+			for (int i = 0; i < ControlNum; i++) {
+
+				if (Controls.c[i].id == id) {
+					return &Controls.c[i];
+				}
+
+			}
+
+			return nullptr;
+
+		}
 
 		ATOM Init(WNDPROC wproc) {
 
@@ -99,7 +114,8 @@ namespace arc {
 
 			HDC hdc;
 			static int x, y;
-			Builder builder(&_hWnd, &table);
+			Builder builder(_hWnd, &table, &Controls, &ControlNum);
+			ARC_Control* control;
 
 			switch (_msg) {
 
@@ -108,7 +124,28 @@ namespace arc {
 				break;
 
 			case WM_COMMAND:
+				if (ControlNum > 0) {
+					control = CtrlInId(LOWORD(_wp));
+					if (control != nullptr && control->Click != nullptr) {
+						control->Click();
+					}
+					/*
+					for (int i = 0; i < ControlNum; i++) {
 
+						if (Controls.c[i].id == LOWORD(_wp) && Controls.c[i].Click != nullptr) {
+							Controls.c[i].Click();
+						}
+
+					}
+					*/
+				}
+				break;
+
+			case WM_CTLCOLORBTN:
+			case WM_CTLCOLORSTATIC:
+
+				hdc = (HDC)_wp;
+				
 				break;
 
 			case WM_DESTROY:

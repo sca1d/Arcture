@@ -7,13 +7,50 @@
 #include "Arcture.h"
 #include "Diversity.h"
 
-#define ID_BUTTON 100
+#define ID_BUTTON	100
+#define ID_RADIO	101
+#define ID_CHECKBOX	102
+#define ID_IMAGE	103
 
 //using namespace arc;
+arc::ARC_ButtonControl RadioButton, Checkbox;
+
+void Button_Click(void) {
+
+	HFONT font = CreateFont(20, 0, 0, 0, 0, FALSE, FALSE, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+		VARIABLE_PITCH | FF_DONTCARE, "HGs‘‘Ì");
+
+	RadioButton.Enable(!RadioButton.Enable());
+	
+	Checkbox.Font(font);
+	RadioButton.Font(Checkbox.Font());
+
+
+	printf("Clicked!!\n");
+
+}
+void Radio_Click(void) {
+
+	printf("radio!\n");
+
+}
+void Checkbox_Click(void) {
+
+	printf("checkbox!\n");
+
+}
+void Image_Click(void) {
+
+	printf("image!\n");
+
+}
 
 void Create(arc::Builder* builder) {
 
-	builder->AddButton("button!!", arc::Point(10, 20), arc::Size(50, 15), ID_BUTTON);
+	builder->AddButton("button!!", arc::Point(10, 20), arc::Size(90, 30), ID_BUTTON, Button_Click);
+	RadioButton = builder->AddAutoRadioButton("radio!", arc::Point(10, 60), arc::Size(90, 30), ID_RADIO, Radio_Click);
+	Checkbox = builder->AddCheckBoxButton("checkbox!", arc::Point(10, 100), arc::Size(90, 30), ID_CHECKBOX, Checkbox_Click);
+	builder->AddImageButton("image!", "button.jpg", arc::Point(10, 140), arc::Size(90, 30), ID_IMAGE, Image_Click);
 
 }
 
