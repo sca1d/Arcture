@@ -10,9 +10,14 @@ extern "C" NTSTATUS WPCloop();
 void(*_createFunc)(arc::Builder* builder);
 void(*_destroyFunc)(void);
 void(*_paintFunc)(HDC* hdcp, PAINTSTRUCT* psp);
+void(*_focusedFunc)(HWND oldFocusHandle);
+void(*_outFocusFunc)(HWND newFocusHandle);
 void(*_mouseDownFunc)(int x, int y, int input);
 void(*_mouseDBClickFunc)(int x, int y, int input);
 void(*_mouseUpFunc)(int x, int y, int input);
+void(*_charFunc)(char keycode);
+void(*_keyDownFunc)(int charset);
+void(*_keyUpFunc)(int charset);
 
 namespace arc {
 
@@ -124,21 +129,24 @@ namespace arc {
 				break;
 
 			case WM_COMMAND:
-				if (ControlNum > 0) {
-					control = CtrlInId(LOWORD(_wp));
-					if (control != nullptr && control->Click != nullptr) {
-						control->Click();
-					}
-					/*
-					for (int i = 0; i < ControlNum; i++) {
 
-						if (Controls.c[i].id == LOWORD(_wp) && Controls.c[i].Click != nullptr) {
-							Controls.c[i].Click();
+				if (ControlNum > 0) {
+
+					control = CtrlInId(LOWORD(_wp));
+					if (control != nullptr) {
+
+						if (control->Click != nullptr) control->Click();
+
+						switch (HIWORD(_wp)) {
+						case EN_UPDATE:
+							if (control->Update != nullptr) control->Update();
+							break;
 						}
 
 					}
-					*/
+
 				}
+
 				break;
 
 			case WM_CTLCOLORBTN:
@@ -160,55 +168,91 @@ namespace arc {
 				EndPaint(_hWnd, &ps);
 				break;
 
+			case WM_SETFOCUS:
+				if (_focusedFunc != nullptr) _focusedFunc((HWND)_wp);
+				break;
+
+			case WM_KILLFOCUS:
+				if (_outFocusFunc != nullptr) _outFocusFunc((HWND)_wp);
+				break;
+
 			#pragma region buttons
 			case WM_LBUTTONDBLCLK:
 				y = HIWORD(_lp);
 				x = LOWORD(_lp);
+				SetFocus(_hWnd);
 				if (_mouseDBClickFunc != nullptr) _mouseDBClickFunc(x, y, ARC_LEFT_BUTTON);
 				break;
 			case WM_MBUTTONDBLCLK:
 				y = HIWORD(_lp);
 				x = LOWORD(_lp);
+				SetFocus(_hWnd);
 				if (_mouseDBClickFunc != nullptr) _mouseDBClickFunc(x, y, ARC_MIDDLE_BUTTON);
 				break;
 			case WM_RBUTTONDBLCLK:
 				y = HIWORD(_lp);
 				x = LOWORD(_lp);
+				SetFocus(_hWnd);
 				if (_mouseDBClickFunc != nullptr) _mouseDBClickFunc(x, y, ARC_RIGHT_BUTTON);
 				break;
 
 			case WM_LBUTTONUP:
 				y = HIWORD(_lp);
 				x = LOWORD(_lp);
+				SetFocus(_hWnd);
 				if (_mouseUpFunc != nullptr) _mouseUpFunc(x, y, ARC_LEFT_BUTTON);
 				break;
 			case WM_MBUTTONUP:
 				y = HIWORD(_lp);
 				x = LOWORD(_lp);
+				SetFocus(_hWnd);
 				if (_mouseUpFunc != nullptr) _mouseUpFunc(x, y, ARC_MIDDLE_BUTTON);
 				break;
 			case WM_RBUTTONUP:
 				y = HIWORD(_lp);
 				x = LOWORD(_lp);
+				SetFocus(_hWnd);
 				if (_mouseUpFunc != nullptr) _mouseUpFunc(x, y, ARC_RIGHT_BUTTON);
 				break;
 
 			case WM_LBUTTONDOWN:
 				y = HIWORD(_lp);
 				x = LOWORD(_lp);
+				SetFocus(_hWnd);
 				if (_mouseDownFunc != nullptr) _mouseDownFunc(x, y, ARC_LEFT_BUTTON);
 				break;
 			case WM_MBUTTONDOWN:
 				y = HIWORD(_lp);
 				x = LOWORD(_lp);
+				SetFocus(_hWnd);
 				if (_mouseDownFunc != nullptr) _mouseDownFunc(x, y, ARC_MIDDLE_BUTTON);
 				break;
 			case WM_RBUTTONDOWN:
 				y = HIWORD(_lp);
 				x = LOWORD(_lp);
+				SetFocus(_hWnd);
 				if (_mouseDownFunc != nullptr) _mouseDownFunc(x, y, ARC_RIGHT_BUTTON);
 				//InvalidateRect(_hWnd, NULL, TRUE);
 				break;
+			#pragma endregion
+
+			#pragma region keyinput
+			
+			case WM_CHAR:
+				if (_charFunc != nullptr) _charFunc(_wp);
+				break;
+
+			case WM_SYSKEYDOWN:
+			case WM_KEYDOWN:
+				if (_keyDownFunc != nullptr) _keyDownFunc(_wp);
+				break;
+
+			case WM_SYSKEYUP:
+			case WM_KEYUP:
+				if (_keyUpFunc != nullptr) _keyUpFunc(_wp);
+				break;
+
+
 			#pragma endregion
 
 			default:
@@ -349,6 +393,18 @@ namespace arc {
 
 		}
 
+		void FocuedFunc(void(*_focused)(HWND oldFocusedHandle)) {
+
+			_focusedFunc = _focused;
+
+		}
+
+		void OutFocusFunc(void(*_outFocus)(HWND newFocusHandle)) {
+
+			_outFocusFunc = _outFocus;
+
+		}
+
 		void MouseDownFunc(void(*_mouseDown)(int x, int y, int input)) {
 
 			_mouseDownFunc = _mouseDown;
@@ -364,6 +420,24 @@ namespace arc {
 		void MouseUpFunc(void(*_mouseUp)(int x, int y, int input)) {
 
 			_mouseUpFunc = _mouseUp;
+
+		}
+
+		void CharInput(void(*_keyInput)(char keycode)) {
+
+			_charFunc = _keyInput;
+
+		}
+
+		void KeyDown(void(*_keyDown)(int charset)) {
+
+			_keyDownFunc = _keyDown;
+
+		}
+
+		void KeyUp(void(*_keyUp)(int charset)) {
+
+			_keyUpFunc = _keyUp;
 
 		}
 

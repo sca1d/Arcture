@@ -7,7 +7,7 @@ namespace arc {
 	@param future:	置き換え先のハンドル
 	@param old:		置き換えるハンドル
 	*/
-	int RePlaceWindow(HWND future, HWND old) {
+	DLL_EXPORT int RePlaceWindow(HWND future, HWND old) {
 
 		LONG_PTR ws = ::GetWindowLongPtr(old, GWL_STYLE);
 		ws &= ~(WS_CAPTION | WS_SIZEBOX);
@@ -29,7 +29,7 @@ namespace arc {
 	}
 
 	// @brief コンソールウィンドウを表示
-	int ViewConsole(void) {
+	DLL_EXPORT int ViewConsole(void) {
 
 		AllocConsole();
 		FILE* fp = NULL;
@@ -41,7 +41,7 @@ namespace arc {
 	}
 
 	// @brief コンソールウィンドウの終了
-	int CloseConsole(void) {
+	DLL_EXPORT int CloseConsole(void) {
 
 		FreeConsole();
 

@@ -19,7 +19,7 @@ namespace arc {
 
 	class ARC_Control {
 
-	private:
+	protected:
 
 		int		_id;
 		HWND	_hwnd, _parent;
@@ -27,6 +27,7 @@ namespace arc {
 
 	public:
 
+		void(*Update)(void);
 		void(*Click)(void);
 
 		ARC_Control(void) {
@@ -40,6 +41,12 @@ namespace arc {
 			this->_hwnd = hwnd_;
 			this->_parent = parent_;
 			this->Click = _click;
+
+		}
+
+		void Focus(void) {
+
+			SetFocus(this->_hwnd);
 
 		}
 
@@ -101,6 +108,8 @@ namespace arc {
 
 	typedef struct { ARC_Control c[0xFF]; }ControlInfoArray;
 
+	#pragma region buttons
+
 	class ARC_ButtonControl : public ARC_Control {
 
 	private:
@@ -146,4 +155,49 @@ namespace arc {
 
 	};
 
+	#pragma endregion
+
+	class ARC_TextBoxControl : public ARC_Control {
+
+	private:
+
+		char* _text;
+
+	public:
+
+		ARC_TextBoxControl(void) {
+
+
+
+		}
+		ARC_TextBoxControl(int id_, HWND hwnd_, HWND parent_) {
+
+			this->_id = id_;
+			this->_hwnd = hwnd_;
+			this->_parent = parent_;
+
+		}
+
+		void SetMultiLineMode(void) {
+
+			SetWindowLong(this->_hwnd, GWL_STYLE, ES_MULTILINE);
+			ShowWindow(this->_hwnd, SW_SHOW);
+
+		}
+
+		void SetScrollBar(void) {
+
+			SetWindowLong(this->_hwnd, GWL_STYLE, ES_AUTOHSCROLL);
+			ShowWindow(this->_hwnd, SW_SHOW);
+
+		}
+
+		void SetOnlyNumberMode(void) {
+
+			SetWindowLong(this->_hwnd, GWL_STYLE, ES_NUMBER);
+			ShowWindow(this->_hwnd, SW_SHOW);
+
+		}
+
+	};
 }

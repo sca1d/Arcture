@@ -23,6 +23,8 @@ namespace arc {
 			cm		= _cm;
 
 		}
+		
+		#pragma region buttons
 
 		template <typename S>
 		ARC_ButtonControl AddButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE) {
@@ -145,6 +147,37 @@ namespace arc {
 
 			HBITMAP hBmp = (HBITMAP)LoadImage(NULL, image_path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 			return AddImageButton(text, hBmp, position, size, id, _click, style);
+
+		}
+
+		#pragma endregion
+
+		template <typename S>
+		ARC_Control* AddTextBox(S text, Point position, Size size, int id, int style = ARC_DEFAULT_STYLE | WS_BORDER | ES_AUTOHSCROLL | ES_LEFT) {
+
+			HWND control_hwnd = CreateWindowEx(
+				0,
+				"EDIT",
+				text,
+				style,
+				position.x,
+				position.y,
+				size.width,
+				size.height,
+				hwnd,
+				(HMENU)id,
+				table->hInst,
+				NULL
+			);
+
+			SendMessage(control_hwnd, EM_SETLIMITTEXT, (WPARAM)63, 0);
+
+			ARC_TextBoxControl control(id, control_hwnd, hwnd);
+
+			info->c[*cm] = control;
+			*cm += 1;
+
+			return &info->c[*cm];
 
 		}
 

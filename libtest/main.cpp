@@ -11,10 +11,12 @@
 #define ID_RADIO	101
 #define ID_CHECKBOX	102
 #define ID_IMAGE	103
+#define ID_TEXTBOX	104
 
 //using namespace arc;
 arc::ARC_RadioButtonControl RadioButton;
 arc::ARC_CheckboxControl Checkbox;
+arc::ARC_Control* TextBox;
 
 void Button_Click(void) {
 
@@ -26,6 +28,7 @@ void Button_Click(void) {
 	Checkbox.Font(font);
 	RadioButton.Font(Checkbox.Font());
 
+	//TextBox.SetOnlyNumberMode();
 
 	printf("Clicked!!\n");
 
@@ -45,6 +48,11 @@ void Image_Click(void) {
 	printf("image!\n");
 
 }
+void TextBox_Update(void) {
+
+	printf("textbox update\n");
+
+}
 
 void Create(arc::Builder* builder) {
 
@@ -52,6 +60,10 @@ void Create(arc::Builder* builder) {
 	RadioButton = builder->AddAutoRadioButton("radio!", arc::Point(10, 60), arc::Size(90, 30), ID_RADIO, Radio_Click);
 	Checkbox = builder->AddCheckBoxButton("checkbox!", arc::Point(10, 100), arc::Size(90, 30), ID_CHECKBOX, Checkbox_Click);
 	builder->AddImageButton("image!", "button.jpg", arc::Point(10, 140), arc::Size(90, 30), ID_IMAGE, Image_Click);
+
+	TextBox = builder->AddTextBox("text", arc::Point(10, 180), arc::Size(150, 50), ID_TEXTBOX);
+	TextBox->Update = TextBox_Update;
+	printf("id:%d\n", TextBox->ID());
 
 }
 
@@ -61,6 +73,26 @@ void Paint(HDC* hdcp, PAINTSTRUCT* psp) {
 
 	FillRect(*hdcp, &psp->rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
 	TextOut(*hdcp, 0, 0, szText, lstrlen(szText));
+
+}
+
+void Focused(HWND oldFocusedHandle) {
+
+	char buff[256] = "";
+	GetWindowText(oldFocusedHandle, buff, sizeof(buff));
+	printf("%s\n", buff);
+
+	printf("focused!!\n");
+
+}
+
+void OutFocus(HWND newFocusHandle) {
+
+	char buff[256] = "";
+	GetWindowText(newFocusHandle, buff, sizeof(buff));
+	printf("%s\n", buff);
+
+	printf("out focus\n");
 
 }
 
@@ -97,6 +129,24 @@ void MouseDBClick(int x, int y, int input) {
 
 }
 
+void CharInput(char keycode) {
+
+	printf("keycode:%c\n", keycode);
+
+}
+
+void KeyDown(int charset) {
+
+	printf("Key Down:%c\n", charset);
+
+}
+
+void KeyUp(int charset) {
+
+	printf("Key Up:%c\n", charset);
+
+}
+
 int WINAPI WinMain(HINSTANCE hCurInst, HINSTANCE hPrevInst, LPSTR lpsCmdLine, int nCmdShow) {
 
 	arc::ViewConsole();
@@ -110,8 +160,13 @@ int WINAPI WinMain(HINSTANCE hCurInst, HINSTANCE hPrevInst, LPSTR lpsCmdLine, in
 
 	gui.CreateFunc(Create);
 	gui.PaintFunc(Paint);
+	gui.FocuedFunc(Focused);
+	gui.OutFocusFunc(OutFocus);
 	gui.MouseDownFunc(MouseDown);
 	gui.MouseDBClickFunc(MouseDBClick);
+	gui.CharInput(CharInput);
+	gui.KeyDown(KeyDown);
+	gui.KeyUp(KeyUp);
 
 	gui.WindowLoop();
 
