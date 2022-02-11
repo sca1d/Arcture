@@ -14,8 +14,8 @@
 #define ID_TEXTBOX	104
 
 //using namespace arc;
-arc::ARC_RadioButtonControl RadioButton;
-arc::ARC_CheckboxControl Checkbox;
+arc::ARC_RadioButtonControl* RadioButton;
+arc::ARC_CheckboxControl* Checkbox;
 arc::ARC_Control* TextBox;
 
 void Button_Click(void) {
@@ -23,10 +23,10 @@ void Button_Click(void) {
 	HFONT font = CreateFont(20, 0, 0, 0, 0, FALSE, FALSE, FALSE, SHIFTJIS_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
 		VARIABLE_PITCH | FF_DONTCARE, "HGs‘‘Ì");
 
-	RadioButton.Checked(!RadioButton.Checked());
+	RadioButton->Checked(!RadioButton->Checked());
 	
-	Checkbox.Font(font);
-	RadioButton.Font(Checkbox.Font());
+	Checkbox->Font(font);
+	RadioButton->Font(Checkbox->Font());
 
 	//TextBox.SetOnlyNumberMode();
 

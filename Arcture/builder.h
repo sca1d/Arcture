@@ -27,7 +27,7 @@ namespace arc {
 		#pragma region buttons
 
 		template <typename S>
-		ARC_ButtonControl AddButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE) {
+		ARC_ButtonControl* AddButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE) {
 
 			HWND control_hwnd = CreateWindowEx(
 				0,
@@ -49,12 +49,12 @@ namespace arc {
 			info->c[*cm] = control;
 			*cm += 1;
 
-			return control;
+			return (ARC_ButtonControl*)&info->c[*cm - 1];
 
 		}
 
 		template <typename S>
-		ARC_RadioButtonControl AddRadioButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_RADIOBUTTON) {
+		ARC_RadioButtonControl* AddRadioButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_RADIOBUTTON) {
 
 			HWND control_hwnd = CreateWindowEx(
 				0,
@@ -76,12 +76,12 @@ namespace arc {
 			info->c[*cm] = control;
 			*cm += 1;
 
-			return control;
+			return (ARC_RadioButtonControl*)&info->c[*cm - 1];
 
 		}
 
 		template <typename S>
-		ARC_RadioButtonControl AddAutoRadioButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_AUTORADIOBUTTON) {
+		ARC_RadioButtonControl* AddAutoRadioButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_AUTORADIOBUTTON) {
 
 			HWND control_hwnd = CreateWindowEx(
 				0,
@@ -103,12 +103,12 @@ namespace arc {
 			info->c[*cm] = control;
 			*cm += 1;
 
-			return control;
+			return (ARC_RadioButtonControl*)&info->c[*cm - 1];
 
 		}
 
 		template <typename S>
-		ARC_CheckboxControl AddCheckBoxButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_AUTOCHECKBOX) {
+		ARC_CheckboxControl* AddCheckBoxButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_AUTOCHECKBOX) {
 
 			HWND control_hwnd = CreateWindowEx(
 				0,
@@ -130,20 +130,21 @@ namespace arc {
 			info->c[*cm] = control;
 			*cm += 1;
 
-			return control;
+			return (ARC_CheckboxControl*)&info->c[*cm - 1];
+
 
 		}
 
 		template <typename S>
-		ARC_ButtonControl AddImageButton(S text, HBITMAP image, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_BITMAP) {
+		ARC_ButtonControl* AddImageButton(S text, HBITMAP image, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_BITMAP) {
 
-			ARC_ButtonControl info = AddButton(text, position, size, id, _click, style);
-			SendMessage(info.hWnd(), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)image);
+			ARC_ButtonControl* info = AddButton(text, position, size, id, _click, style);
+			SendMessage(info->hWnd(), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)image);
 			return info;
 
 		}
 		template <typename S>
-		ARC_ButtonControl AddImageButton(S text, S image_path, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_BITMAP) {
+		ARC_ButtonControl* AddImageButton(S text, S image_path, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_BITMAP) {
 
 			HBITMAP hBmp = (HBITMAP)LoadImage(NULL, image_path, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 			return AddImageButton(text, hBmp, position, size, id, _click, style);
@@ -153,7 +154,7 @@ namespace arc {
 		#pragma endregion
 
 		template <typename S>
-		ARC_Control* AddTextBox(S text, Point position, Size size, int id, int style = ARC_DEFAULT_STYLE | WS_BORDER | ES_AUTOHSCROLL | ES_LEFT) {
+		ARC_TextBoxControl* AddTextBox(S text, Point position, Size size, int id, int style = ARC_DEFAULT_STYLE | WS_BORDER | ES_AUTOHSCROLL | ES_LEFT) {
 
 			HWND control_hwnd = CreateWindowEx(
 				0,
@@ -177,7 +178,7 @@ namespace arc {
 			info->c[*cm] = control;
 			*cm += 1;
 
-			return &info->c[*cm];
+			return (ARC_TextBoxControl*)&info->c[*cm - 1];
 
 		}
 
