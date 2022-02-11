@@ -19,4 +19,14 @@
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="libtest.rc">
+      <Filter>Resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
 </Project>

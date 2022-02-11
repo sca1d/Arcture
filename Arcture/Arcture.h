@@ -32,13 +32,14 @@ namespace arc {
 		HWND hWnd;
 		HICON icon = NULL, hicon = NULL;
 		HBRUSH bg = (HBRUSH)GetStockObject(BLACK_BRUSH);
-		LPCSTR menu_name = NULL;
 		LPCSTR classname = (LPCSTR)"winclass";
 
 		char WindowName[0xFF];
 
 		HWND	Parent = NULL;
-		HMENU	Menu = NULL;
+		
+		LPCSTR	MenuSTR	= NULL;
+		HMENU	Menu	= NULL;
 
 		DWORD	style = WS_OVERLAPPEDWINDOW;
 
@@ -76,7 +77,7 @@ namespace arc {
 			w.hIcon = icon;
 			w.hCursor = (HCURSOR)LoadImage(NULL, MAKEINTRESOURCE(IDC_ARROW), IMAGE_CURSOR, 0, 0, LR_DEFAULTSIZE | LR_SHARED);
 			w.hbrBackground = bg;
-			w.lpszMenuName = menu_name;
+			w.lpszMenuName = MenuSTR;
 			w.lpszClassName = classname;
 			w.hIconSm = hicon;
 
@@ -365,9 +366,12 @@ namespace arc {
 
 		}
 
-		void SetMenu(HMENU hMenu) {
+		void SetMenuItem(LPCSTR menuId) {
 
-			Menu = hMenu;
+			MenuSTR	= menuId;
+			Menu	= LoadMenu(table.hInst, menuId);
+			if (Menu != NULL) printf("menu handle is not null\n");
+			SetMenu(hWnd, Menu);
 
 		}
 
@@ -454,6 +458,12 @@ namespace arc {
 		HWND GetParentHandle(void) {
 
 			return Parent;
+
+		}
+
+		ITable GetTable(void) {
+
+			return table;
 
 		}
 

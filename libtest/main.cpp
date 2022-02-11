@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+#include "resource.h"
+
 #include "Arcture.h"
 #include "Diversity.h"
 
@@ -63,7 +65,6 @@ void Create(arc::Builder* builder) {
 
 	TextBox = builder->AddTextBox("text", arc::Point(10, 180), arc::Size(150, 50), ID_TEXTBOX);
 	TextBox->Update = TextBox_Update;
-	printf("id:%d\n", TextBox->ID());
 
 }
 
@@ -153,9 +154,12 @@ int WINAPI WinMain(HINSTANCE hCurInst, HINSTANCE hPrevInst, LPSTR lpsCmdLine, in
 
 	arc::GUI gui(hCurInst, hPrevInst, lpsCmdLine, nCmdShow);
 
+	arc::ITable table = gui.GetTable();
+
 	gui.SetWindowName("Test Window");
 	gui.SetWindowPosition(30, 50);
 	gui.SetWindowSize(900, 400);
+	gui.SetMenuItem(TEXT("IDR_MENU1"));
 	gui.AddWindowStyle(WS_HSCROLL);
 
 	gui.CreateFunc(Create);
