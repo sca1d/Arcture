@@ -4,10 +4,14 @@
 
 #include <iostream>
 
+#include "GL/glut.h"
+
 #include "resource.h"
 
 #include "Arcture.h"
 #include "Diversity.h"
+
+#include "glarc.h"
 
 #define ID_BUTTON	100
 #define ID_RADIO	101
@@ -21,6 +25,8 @@ arc::ARC_RadioButtonControl* RadioButton;
 arc::ARC_CheckboxControl* Checkbox;
 arc::ARC_Control* TextBox;
 arc::ARC_Control* CustomControl;
+
+glarc::GlutControl glcontrol;
 
 void Button_Click(void) {
 
@@ -73,7 +79,8 @@ void Create(arc::Builder* builder) {
 	TextBox = builder->AddTextBox("text", arc::Point(10, 180), arc::Size(150, 50), ID_TEXTBOX);
 	TextBox->Update = TextBox_Update;
 
-	CustomControl = builder->AddCustomControl(arc::Point(10, 240), arc::Size(90, 30), ID_CUSTOM);
+	CustomControl = builder->AddCustomControl(arc::Point(10, 240), arc::Size(90, 90), ID_CUSTOM);
+	glcontrol = glarc::GlutControl(CustomControl);
 
 }
 
@@ -93,6 +100,23 @@ void DrawItem(LPDRAWITEMSTRUCT itemp) {
 		SetTextColor(itemp->hDC, RGB(100, 0, 100));
 		const char* text = "Some static text";
 		TextOut(itemp->hDC, itemp->rcItem.left, itemp->rcItem.top, text, ARRAY_SIZE(text));
+
+		/* opengl for glarc */
+		glcontrol.Begin();
+
+		glBegin(GL_QUADS);
+		glColor3f(1.0, 0.0, 0.0);
+		glVertex2d(-0.5, -0.5);
+		glColor3f(0.0, 1.0, 0.0);
+		glVertex2d(-0.5, 0.5);
+		glColor3f(0.0, 0.0, 1.0);
+		glVertex2d(0.5, 0.5);
+		glColor3f(1.0, 1.0, 1.0);
+		glVertex2d(0.5, -0.5);
+		glEnd();
+
+		glcontrol.End();
+		/* opengl for glarc */
 
 	}
 

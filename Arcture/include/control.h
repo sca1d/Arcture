@@ -23,6 +23,8 @@ namespace arc {
 
 		int		_id;
 		HWND	_hwnd, _parent;
+		Point	_location;
+		Size	_size;
 		ARC_RGB	bcolor;
 
 	public:
@@ -35,11 +37,13 @@ namespace arc {
 
 
 		}
-		ARC_Control(int id_, HWND hwnd_, HWND parent_, void(*_click)(void) = nullptr) {
+		ARC_Control(int id_, HWND hwnd_, HWND parent_, Point loc_, Size size_, void(*_click)(void) = nullptr) {
 
 			this->_id = id_;
 			this->_hwnd = hwnd_;
 			this->_parent = parent_;
+			this->_location = loc_;
+			this->_size = size_;
 			this->Click = _click;
 
 		}
@@ -65,6 +69,18 @@ namespace arc {
 		HWND Parent(void) {
 
 			return _parent;
+
+		}
+
+		Point Location(void) {
+
+			return _location;
+
+		}
+
+		Size Size(void) {
+
+			return _size;
 
 		}
 
@@ -165,18 +181,7 @@ namespace arc {
 
 	public:
 
-		ARC_TextBoxControl(void) {
-
-
-
-		}
-		ARC_TextBoxControl(int id_, HWND hwnd_, HWND parent_) {
-
-			this->_id = id_;
-			this->_hwnd = hwnd_;
-			this->_parent = parent_;
-
-		}
+		using ARC_Control::ARC_Control;
 
 		void SetMultiLineMode(void) {
 

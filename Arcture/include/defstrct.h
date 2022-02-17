@@ -65,6 +65,9 @@ namespace arc {
 		int x;
 		int y;
 
+		_Point(void) {
+
+		}
 		_Point(int _x, int _y) {
 			
 			this->x = _x;
@@ -79,6 +82,9 @@ namespace arc {
 		float x;
 		float y;
 
+		_PointF(void) {
+
+		}
 		_PointF(float _x, float _y) {
 
 			this->x = _x;
@@ -93,6 +99,9 @@ namespace arc {
 		double x;
 		double y;
 
+		_PointD(void) {
+
+		}
 		_PointD(double _x, double _y) {
 
 			this->x = _x;
@@ -107,6 +116,9 @@ namespace arc {
 		int width;
 		int height;
 
+		_Size(void) {
+
+		}
 		_Size(int w, int h) {
 
 			this->width		= w;
@@ -121,6 +133,9 @@ namespace arc {
 		float width;
 		float height;
 
+		_SizeF(void) {
+
+		}
 		_SizeF(float w, float h) {
 
 			this->width		= w;
@@ -135,6 +150,9 @@ namespace arc {
 		double width;
 		double height;
 
+		_SizeD(void) {
+
+		}
 		_SizeD(double w, double h) {
 
 			this->width		= w;

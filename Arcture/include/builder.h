@@ -43,7 +43,7 @@ namespace arc {
 				NULL
 			);
 
-			ARC_Control control(id, control_hwnd, hwnd);
+			ARC_Control control(id, control_hwnd, hwnd, position, size);
 
 			info->c[*cm] = control;
 			*cm += 1;
@@ -70,7 +70,7 @@ namespace arc {
 				NULL
 			);
 
-			ARC_ButtonControl control(id, control_hwnd, hwnd, _click);
+			ARC_ButtonControl control(id, control_hwnd, hwnd, position, size, _click);
 
 			info->c[*cm] = control;
 			*cm += 1;
@@ -97,7 +97,7 @@ namespace arc {
 				NULL
 			);
 
-			ARC_RadioButtonControl control(id, control_hwnd, hwnd, _click);
+			ARC_RadioButtonControl control(id, control_hwnd, position, size, hwnd, _click);
 
 			info->c[*cm] = control;
 			*cm += 1;
@@ -124,7 +124,7 @@ namespace arc {
 				NULL
 			);
 
-			ARC_RadioButtonControl control(id, control_hwnd, hwnd, _click);
+			ARC_RadioButtonControl control(id, control_hwnd, hwnd, position, size, _click);
 
 			info->c[*cm] = control;
 			*cm += 1;
@@ -151,7 +151,7 @@ namespace arc {
 				NULL
 			);
 
-			ARC_CheckboxControl control(id, control_hwnd, hwnd, _click);
+			ARC_CheckboxControl control(id, control_hwnd, hwnd, position, size, _click);
 
 			info->c[*cm] = control;
 			*cm += 1;
@@ -199,7 +199,7 @@ namespace arc {
 
 			SendMessage(control_hwnd, EM_SETLIMITTEXT, (WPARAM)63, 0);
 
-			ARC_TextBoxControl control(id, control_hwnd, hwnd);
+			ARC_TextBoxControl control(id, control_hwnd, hwnd, position, size);
 
 			info->c[*cm] = control;
 			*cm += 1;
