@@ -138,7 +138,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLforArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -155,7 +155,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLforArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -174,7 +174,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLforArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -193,7 +193,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLforArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -210,7 +210,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLforArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -229,7 +229,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLforArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Visual Studio Librarys\Originals\Arcture\Arcture\GLArc\include;F:\Visual Studio Librarys\Originals\Arcture\Arcture\Arcture\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -249,7 +249,7 @@
     <ProjectReference Include="..\Arcture\Arcture.vcxproj">
       <Project>{0b3bb9ff-75d2-41f9-857c-af57ffeb286b}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\GLforArc\GLforArc.vcxproj">
+    <ProjectReference Include="..\GLArc\GLforArc.vcxproj">
       <Project>{76e07642-ca46-4ea5-bf83-05cc0bb9784e}</Project>
     </ProjectReference>
   </ItemGroup>
