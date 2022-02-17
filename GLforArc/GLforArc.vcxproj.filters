@@ -20,28 +20,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\arcture.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="include\builder.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="include\control.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="include\deflate.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="include\defstrct.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="include\diversity.h">
-      <Filter>Header</Filter>
-    </ClInclude>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="include\arcture.asm">
-      <Filter>Source</Filter>
-    </MASM>
+    <ClInclude Include="include\glarc.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

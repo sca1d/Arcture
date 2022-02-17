@@ -155,17 +155,15 @@
     <ClCompile Include="dllmain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="arcture.h" />
-    <ClInclude Include="builder.h" />
-    <ClInclude Include="control.h" />
-    <ClInclude Include="deflate.h" />
-    <ClInclude Include="defstrct.h" />
-    <ClInclude Include="diversity.h" />
+    <ClInclude Include="include\arcture.h" />
+    <ClInclude Include="include\builder.h" />
+    <ClInclude Include="include\control.h" />
+    <ClInclude Include="include\deflate.h" />
+    <ClInclude Include="include\defstrct.h" />
+    <ClInclude Include="include\diversity.h" />
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="arcture.asm">
-      <FileType>Document</FileType>
-    </MASM>
+    <MASM Include="include\arcture.asm" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

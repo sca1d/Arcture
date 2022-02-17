@@ -1,2 +1,2 @@
-#include "arcture.h"
-#include "diversity.h"
+#include "include/arcture.h"
+#include "include/diversity.h"
