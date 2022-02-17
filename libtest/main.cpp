@@ -73,7 +73,7 @@ void Create(arc::Builder* builder) {
 	TextBox = builder->AddTextBox("text", arc::Point(10, 180), arc::Size(150, 50), ID_TEXTBOX);
 	TextBox->Update = TextBox_Update;
 
-	CustomControl = builder->AddCustomControl(arc::Point(10, 240), arc::Size(90, 30), ID_CUSTOM, Custom_Click);
+	CustomControl = builder->AddCustomControl(arc::Point(10, 240), arc::Size(90, 30), ID_CUSTOM);
 
 }
 

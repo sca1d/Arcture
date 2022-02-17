@@ -26,7 +26,7 @@ namespace arc {
 		
 		#pragma region buttons
 
-		ARC_Control* AddCustomControl(Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE) {
+		ARC_Control* AddCustomControl(Point position, Size size, int id, int style = ARC_DEFAULT_STYLE) {
 
 			HWND control_hwnd = CreateWindowEx(
 				0,
@@ -43,7 +43,7 @@ namespace arc {
 				NULL
 			);
 
-			ARC_Control control(id, control_hwnd, hwnd, _click);
+			ARC_Control control(id, control_hwnd, hwnd);
 
 			info->c[*cm] = control;
 			*cm += 1;

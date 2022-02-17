@@ -161,14 +161,9 @@
     <ClInclude Include="include\deflate.h" />
     <ClInclude Include="include\defstrct.h" />
     <ClInclude Include="include\diversity.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <MASM Include="include\arcture.asm" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
