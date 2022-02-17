@@ -14,11 +14,13 @@
 #define ID_CHECKBOX	102
 #define ID_IMAGE	103
 #define ID_TEXTBOX	104
+#define ID_CUSTOM	105
 
 //using namespace arc;
 arc::ARC_RadioButtonControl* RadioButton;
 arc::ARC_CheckboxControl* Checkbox;
 arc::ARC_Control* TextBox;
+arc::ARC_Control* CustomControl;
 
 void Button_Click(void) {
 
@@ -55,6 +57,11 @@ void TextBox_Update(void) {
 	printf("textbox update\n");
 
 }
+void Custom_Click(void) {
+
+	printf("custom control clicked\n");
+
+}
 
 void Create(arc::Builder* builder) {
 
@@ -66,6 +73,8 @@ void Create(arc::Builder* builder) {
 	TextBox = builder->AddTextBox("text", arc::Point(10, 180), arc::Size(150, 50), ID_TEXTBOX);
 	TextBox->Update = TextBox_Update;
 
+	CustomControl = builder->AddCustomControl(arc::Point(10, 240), arc::Size(90, 30), ID_CUSTOM, Custom_Click);
+
 }
 
 void Paint(HDC* hdcp, PAINTSTRUCT* psp) {
@@ -74,6 +83,18 @@ void Paint(HDC* hdcp, PAINTSTRUCT* psp) {
 
 	FillRect(*hdcp, &psp->rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
 	TextOut(*hdcp, 0, 0, szText, lstrlen(szText));
+
+}
+
+void DrawItem(LPDRAWITEMSTRUCT itemp) {
+
+	if (itemp->hwndItem == CustomControl->hWnd()) {
+
+		SetTextColor(itemp->hDC, RGB(100, 0, 100));
+		const char* text = "Some static text";
+		TextOut(itemp->hDC, itemp->rcItem.left, itemp->rcItem.top, text, ARRAY_SIZE(text));
+
+	}
 
 }
 
@@ -164,6 +185,7 @@ int WINAPI WinMain(HINSTANCE hCurInst, HINSTANCE hPrevInst, LPSTR lpsCmdLine, in
 
 	gui.CreateFunc(Create);
 	gui.PaintFunc(Paint);
+	gui.DrawItemFunc(DrawItem);
 	gui.FocuedFunc(Focused);
 	gui.OutFocusFunc(OutFocus);
 	gui.MouseDownFunc(MouseDown);

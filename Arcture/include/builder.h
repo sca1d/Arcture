@@ -26,6 +26,32 @@ namespace arc {
 		
 		#pragma region buttons
 
+		ARC_Control* AddCustomControl(Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE) {
+
+			HWND control_hwnd = CreateWindowEx(
+				0,
+				"STATIC",
+				"",
+				style | SS_OWNERDRAW,
+				position.x,
+				position.y,
+				size.width,
+				size.height,
+				hwnd,
+				(HMENU)id,
+				table->hInst,
+				NULL
+			);
+
+			ARC_Control control(id, control_hwnd, hwnd, _click);
+
+			info->c[*cm] = control;
+			*cm += 1;
+
+			return &info->c[*cm - 1];
+
+		}
+
 		template <typename S>
 		ARC_ButtonControl* AddButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE) {
 

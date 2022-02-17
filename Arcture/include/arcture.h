@@ -10,6 +10,7 @@ extern "C" NTSTATUS WPCloop();
 void(*_createFunc)(arc::Builder* builder);
 void(*_destroyFunc)(void);
 void(*_paintFunc)(HDC* hdcp, PAINTSTRUCT* psp);
+void(*_drawItemFunc)(LPDRAWITEMSTRUCT itemp);
 void(*_focusedFunc)(HWND oldFocusHandle);
 void(*_outFocusFunc)(HWND newFocusHandle);
 void(*_mouseDownFunc)(int x, int y, int input);
@@ -167,6 +168,10 @@ namespace arc {
 				hdc = BeginPaint(_hWnd, &ps);
 				if (_paintFunc != nullptr) _paintFunc(&hdc, &ps);
 				EndPaint(_hWnd, &ps);
+				break;
+
+			case WM_DRAWITEM:
+				if (_drawItemFunc != nullptr) _drawItemFunc((LPDRAWITEMSTRUCT)_lp);
 				break;
 
 			case WM_SETFOCUS:
@@ -394,6 +399,12 @@ namespace arc {
 		void PaintFunc(void(*_paint)(HDC* hdcp, PAINTSTRUCT* psp)) {
 
 			_paintFunc = _paint;
+
+		}
+
+		void DrawItemFunc(void(*_drawItem)(LPDRAWITEMSTRUCT itemp)) {
+
+			_drawItemFunc = _drawItem;
 
 		}
 
