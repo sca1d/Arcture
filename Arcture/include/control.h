@@ -17,6 +17,7 @@
 
 namespace arc {
 
+	#pragma pack(push, 1)
 	//@brief コントロールクラス
 	class ARC_Control {
 
@@ -151,8 +152,11 @@ namespace arc {
 		}
 
 	};
+	#pragma pack(pop)
 
+	#pragma pack(push, 1)
 	typedef struct { ARC_Control c[0xFF]; }ControlInfoArray;
+	#pragma pack(pop)
 
 	#pragma region buttons
 

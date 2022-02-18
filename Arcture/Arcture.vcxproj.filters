@@ -44,4 +44,9 @@
       <Filter>Source</Filter>
     </MASM>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="include\defstrct.inc">
+      <Filter>Header</Filter>
+    </None>
+  </ItemGroup>
 </Project>

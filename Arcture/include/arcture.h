@@ -5,7 +5,7 @@
 #include "control.h"
 #include "builder.h"
 
-extern "C" NTSTATUS WPCloop();
+extern "C" NTSTATUS WPCloop(int id, arc::ControlInfoArray* ctrls, int cnum);
 
 void(*_createFunc)(arc::Builder* builder);
 void(*_destroyFunc)(void);
