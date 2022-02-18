@@ -97,7 +97,7 @@ void DrawItem(LPDRAWITEMSTRUCT itemp) {
 
 	if (itemp->hwndItem == CustomControl->hWnd()) {
 
-		FillRect(itemp->hDC, &itemp->rcItem, (HBRUSH)(COLOR_WINDOW + 1));
+		FillRect(itemp->hDC, &itemp->rcItem, CreateSolidBrush(COLORREF RGB(0xFF, 0, 0)));
 		SetTextColor(itemp->hDC, RGB(100, 0, 100));
 		const char* text = "Some static text";
 		TextOut(itemp->hDC, itemp->rcItem.left, itemp->rcItem.top, text, ARRAY_SIZE(text));

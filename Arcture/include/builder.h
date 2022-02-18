@@ -6,6 +6,7 @@
 
 namespace arc {
 
+	//@brief コントロール生成マネージャークラス
 	class Builder {
 
 	private:
@@ -15,6 +16,12 @@ namespace arc {
 		int*				cm;
 		
 	public:
+		/*
+		@param _hwnd:	ウィンドウハンドル
+		@param _tbl:	インスタンステーブルのポインタ
+		@param _info:	コントロール集合ポインタ
+		@param _cm:		コントロール数格納ポインタ
+		*/
 		Builder(HWND _hwnd, ITable* _tbl, ControlInfoArray* _info, int* _cm) {
 
 			hwnd	= _hwnd;
@@ -26,6 +33,13 @@ namespace arc {
 		
 		#pragma region buttons
 
+		/*
+		@brief カスタムコントロールの作成
+		@param position:	配置位置
+		@param size:		サイズ
+		@param id:			ID
+		@param style:		スタイル
+		*/
 		ARC_Control* AddCustomControl(Point position, Size size, int id, int style = ARC_DEFAULT_STYLE) {
 
 			HWND control_hwnd = CreateWindowEx(
@@ -52,6 +66,15 @@ namespace arc {
 
 		}
 
+		/*
+		@brief ボタンコントロールの作成
+		@param text:		表示テキスト
+		@param position:	配置位置
+		@param size:		サイズ
+		@param id:			ID
+		@param _click:		クリックイベント関数
+		@param style:		スタイル
+		*/
 		template <typename S>
 		ARC_ButtonControl* AddButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE) {
 
@@ -79,6 +102,15 @@ namespace arc {
 
 		}
 
+		/*
+		@brief ラジオボタンコントロールの作成
+		@param text:		表示テキスト
+		@param position:	配置位置
+		@param size:		サイズ
+		@param id:			ID
+		@param _click:		クリックイベント関数
+		@param style:		スタイル
+		*/
 		template <typename S>
 		ARC_RadioButtonControl* AddRadioButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_RADIOBUTTON) {
 
@@ -106,6 +138,15 @@ namespace arc {
 
 		}
 
+		/*
+		@brief オートラジオボタンコントロールの作成
+		@param text:		表示テキスト
+		@param position:	配置位置
+		@param size:		サイズ
+		@param id:			ID
+		@param _click:		クリックイベント関数
+		@param style:		スタイル
+		*/
 		template <typename S>
 		ARC_RadioButtonControl* AddAutoRadioButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_AUTORADIOBUTTON) {
 
@@ -133,6 +174,15 @@ namespace arc {
 
 		}
 
+		/*
+		@brief チェックボックスコントロールの作成
+		@param text:		表示テキスト
+		@param position:	配置位置
+		@param size:		サイズ
+		@param id:			ID
+		@param _click:		クリックイベント関数
+		@param style:		スタイル
+		*/
 		template <typename S>
 		ARC_CheckboxControl* AddCheckBoxButton(S text, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_AUTOCHECKBOX) {
 
@@ -161,6 +211,16 @@ namespace arc {
 
 		}
 
+		/*
+		@brief イメージボタンコントロールの作成
+		@param text:		表示テキスト
+		@param image:		表示ビットマップ
+		@param position:	配置位置
+		@param size:		サイズ
+		@param id:			ID
+		@param _click:		クリックイベント関数
+		@param style:		スタイル
+		*/
 		template <typename S>
 		ARC_ButtonControl* AddImageButton(S text, HBITMAP image, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_BITMAP) {
 
@@ -169,6 +229,16 @@ namespace arc {
 			return info;
 
 		}
+		/*
+		@brief イメージボタンコントロールの作成
+		@param text:		表示テキスト
+		@param image:		表示画像のファイルパス
+		@param position:	配置位置
+		@param size:		サイズ
+		@param id:			ID
+		@param _click:		クリックイベント関数
+		@param style:		スタイル
+		*/
 		template <typename S>
 		ARC_ButtonControl* AddImageButton(S text, S image_path, Point position, Size size, int id, void(*_click)(void) = nullptr, int style = ARC_DEFAULT_STYLE | BS_BITMAP) {
 
@@ -179,6 +249,15 @@ namespace arc {
 
 		#pragma endregion
 
+		/*
+		@brief テキストボックスコントロールの作成
+		@param text:		表示テキスト
+		@param position:	配置位置
+		@param size:		サイズ
+		@param id:			ID
+		@param _click:		クリックイベント関数
+		@param style:		スタイル
+		*/
 		template <typename S>
 		ARC_TextBoxControl* AddTextBox(S text, Point position, Size size, int id, int style = ARC_DEFAULT_STYLE | WS_BORDER | ES_AUTOHSCROLL | ES_LEFT) {
 

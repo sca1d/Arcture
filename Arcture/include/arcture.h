@@ -27,6 +27,7 @@ namespace arc {
 	ControlInfoArray Controls;
 	int ControlNum = 0;
 
+	//@brief UI・GUI・ウィンドウ生成クラス
 	class GUI {
 
 	private:
@@ -271,6 +272,10 @@ namespace arc {
 		}
 
 	public:
+		/*
+		@param t:		インスタンスデータテーブル
+		@param wProc:	独自で WndProc 関数を使用したい場合に設定
+		*/
 		GUI(ITable t, LRESULT (*wProc)(HWND, UINT, WPARAM, LPARAM) = nullptr) {
 
 			table = t;
@@ -283,6 +288,13 @@ namespace arc {
 			if (!ret) throw;
 
 		}
+		/*
+		@param hCurInst:	インスタンスハンドル
+		@param hPrevInst:	Win16のインスタンス ※Win32では常にNULL
+		@param lpsCmdLine:	コマンドライン
+		@param nCmdShow:	アプリケーション初期表示設定
+		@param wProc:		独自で WndProc 関数を使用したい場合に設定
+		*/
 		GUI(HINSTANCE hCurInst, HINSTANCE hPrevInst, LPSTR lpsCmdLine, int nCmdShow, LRESULT(*wProc)(HWND, UINT, WPARAM, LPARAM) = nullptr) {
 
 			table = { hCurInst, hPrevInst, lpsCmdLine, nCmdShow };
@@ -302,6 +314,7 @@ namespace arc {
 
 		#pragma region setups
 
+		//@brief ウィンドウタイトル を設定
 		template <typename S>
 		void SetWindowName(S name) {
 
@@ -309,6 +322,7 @@ namespace arc {
 
 		}
 
+		//@brief ウィンドウ生成時の 表示位置 を 内部初期値 に設定
 		void SetWindowPositionDefault(void) {
 
 			x = CW_USEDEFAULT;
@@ -316,6 +330,7 @@ namespace arc {
 
 		}
 
+		//@brief ウィンドウ生成時の 表示位置 を設定
 		template <typename P>
 		void SetWindowPosition(P p) {
 
@@ -323,6 +338,7 @@ namespace arc {
 			y = static_cast<int>(p.y);
 
 		}
+		//@brief ウィンドウ生成時の 表示位置 を設定
 		template <typename T>
 		void SetWindowPosition(T _x, T _y) {
 
@@ -331,6 +347,7 @@ namespace arc {
 
 		}
 
+		//@brief ウィンドウ生成時の 表示サイズ を 内部初期値 に設定
 		void SetWindowSizeDefault(void) {
 
 			w = CW_USEDEFAULT;
@@ -338,6 +355,7 @@ namespace arc {
 
 		}
 
+		//@brief ウィンドウ生成時の 表示サイズ を設定
 		template <typename S>
 		void SetWindowSize(S s) {
 
@@ -346,6 +364,7 @@ namespace arc {
 
 		}
 
+		//@brief ウィンドウ生成時の 表示サイズ を設定
 		template <typename T>
 		void SetWindowSize(T width, T height) {
 
@@ -354,23 +373,27 @@ namespace arc {
 
 		}
 
+		//@brief ウィンドウスタイル を設定
 		void SetWindowStyle(DWORD _style) {
 
 			style = _style;
 
 		}
 
+		//@brief ウィンドウスタイル を追加設定
 		void AddWindowStyle(DWORD _style) {
 
 			style |= _style;
 		}
 
+		//@brief 親ウィンドウ を設定
 		void SetParentWindow(HWND hWnd) {
 
 			Parent = hWnd;
 
 		}
 
+		//@brief ウィンドウメニュー を設定
 		void SetMenuItem(LPCSTR menuId) {
 
 			MenuSTR	= menuId;
@@ -384,72 +407,84 @@ namespace arc {
 
 		#pragma region events
 
+		//@brief ウィンドウ生成イベント を設定
 		void CreateFunc(void(*_create)(Builder* builder)) {
 
 			_createFunc = _create;
 
 		}
 
+		//@brief ウィンドウ破棄イベント を設定
 		void DestroyFunc(void(*_destroy)(void)) {
 
 			_destroyFunc = _destroy;
 
 		}
 
+		//@brief 描画イベント を設定
 		void PaintFunc(void(*_paint)(HDC* hdcp, PAINTSTRUCT* psp)) {
 
 			_paintFunc = _paint;
 
 		}
 
+		//@brief オーナードローイベント を設定
 		void DrawItemFunc(void(*_drawItem)(LPDRAWITEMSTRUCT itemp)) {
 
 			_drawItemFunc = _drawItem;
 
 		}
 
+		//@brief フォーカスイベント を設定
 		void FocuedFunc(void(*_focused)(HWND oldFocusedHandle)) {
 
 			_focusedFunc = _focused;
 
 		}
 
+		//@brief アンフォーカスイベント を設定
 		void OutFocusFunc(void(*_outFocus)(HWND newFocusHandle)) {
 
 			_outFocusFunc = _outFocus;
 
 		}
 
+		//@brief マウスダウンイベント を設定
 		void MouseDownFunc(void(*_mouseDown)(int x, int y, int input)) {
 
 			_mouseDownFunc = _mouseDown;
 
 		}
 
+		//@brief マウスダブルクリックイベント を設定
 		void MouseDBClickFunc(void(*_mouseDBClick)(int x, int y, int input)) {
 
 			_mouseDBClickFunc = _mouseDBClick;
 
 		}
 
+		//@brief マウスアップイベント を設定
 		void MouseUpFunc(void(*_mouseUp)(int x, int y, int input)) {
 
 			_mouseUpFunc = _mouseUp;
 
 		}
 
+		//@brief キー入力イベント を設定
 		void CharInput(void(*_keyInput)(char keycode)) {
 
 			_charFunc = _keyInput;
 
 		}
 
+		//@brief キーダウンイベント を設定
 		void KeyDown(void(*_keyDown)(int charset)) {
 
 			_keyDownFunc = _keyDown;
 
 		}
 
+		//@brief キーアップイベント を設定
 		void KeyUp(void(*_keyUp)(int charset)) {
 
 			_keyUpFunc = _keyUp;
@@ -460,30 +495,35 @@ namespace arc {
 
 		#pragma region getter
 
+		//@brief ウィンドウハンドル を取得
 		HWND GetHandle(void) {
 
 			return hWnd;
 
 		}
 
+		//@brief 親ウィンドウハンドル を取得
 		HWND GetParentHandle(void) {
 
 			return Parent;
 
 		}
 
+		//@brief インスタンステーブル を取得
 		ITable GetTable(void) {
 
 			return table;
 
 		}
 
+		//@brief アイコン を取得
 		HICON GetIcon(void) {
 
 			return icon;
 
 		}
 
+		//@brief スモールアイコン を取得
 		HICON GetIconSM(void) {
 
 			return hicon;
@@ -492,12 +532,14 @@ namespace arc {
 
 		#pragma endregion
 
+		//@brief ウィンドウに 再描画命令 を送信
 		void Redraw(void) {
 
 			InvalidateRect(hWnd, NULL, TRUE);
 
 		}
 
+		//@brief メインループ
 		void WindowLoop(void) {
 
 			MakeWindow();
